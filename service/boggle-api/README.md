@@ -33,4 +33,27 @@ $ rails db:environment:set RAILS_ENV=test && bundle exec rspec
 $ rails s
 ```
 
+* Test the service:
+
+Get a new board:
+
+```
+http://ocalhost:3000/boggle/v1/boards/new
+```
+
+Sample out:
+```json
+{"board":"XEASYEUHAENTYEBC"}
+```
+
+  Check a word to see if it's on the board and valid:
+```
+http://localhost:3000/boggle/v1/boards/XEASYEUHAENTYEBC?word=EASY
+```
+
+Sample out:
+```json
+{"board":"XEASYEUHAENTYEBC","word":"XEAS","found_on_board":false,"word_valid":true}
+```
+
 
