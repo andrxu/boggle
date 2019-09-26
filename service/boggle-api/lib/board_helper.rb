@@ -60,13 +60,15 @@ class BoardHelper
 
   # pretty print the board for debugging
   def self.show(board_str)
+    result = ''
     dim = Math.sqrt(board_str.length)
     (0...dim).each do |row|
       (0...dim).each do |col|
-        print"#{board_str[row * dim + col]} "
+        result += "#{board_str[row * dim + col]} "
       end
-      puts
+      result += "\n"
     end
+    result
   end
 
   # generate a new board

@@ -13,7 +13,8 @@ class BoardsController < ApplicationController
   def find_word
     board_str = params[:board]
     word = params[:word]
-    result = ::BoardHelper.check_word(board_str, word)
+    result = ::BoardHelper.check_word(board_str, word) unless word.nil?
+    result = ::BoardHelper.show(board_str) if word.nil?
     json_response(result)
   end
 end
