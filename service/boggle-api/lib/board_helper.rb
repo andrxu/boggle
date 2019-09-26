@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative './dictionary_accessor.rb'
 
 class BoardHelper
 
@@ -12,7 +13,7 @@ class BoardHelper
 
   def self.check_word(board_str, word)
     found_on_board = word_on_board?(board_str, word)
-    word_valid = word_valid?(word)
+    word_valid = word_valid?(word) if found_on_board
     {
       board: board_str,
       word: word,
@@ -33,7 +34,8 @@ class BoardHelper
       raise "invalid word length: #{word}"
     end
 
-    grid = to_array(board_str)
+    word_search = word.upcase
+    grid = to_array(board_str.upcase)
     rows = grid.length
     cols = grid[0].length
 
@@ -42,17 +44,18 @@ class BoardHelper
     found_on_board = false
     (0...rows).each do |r|
       (0...cols).each do |c|
-        if grid[r][c] == word[index]
-          found_on_board = dfs(grid, word, r, c, index, seen)
+        if grid[r][c] == word_search[index]
+          found_on_board = dfs(grid, word_search, r, c, index, seen)
           break if found_on_board
         end
       end
+      break if found_on_board
     end
     found_on_board
   end
 
   def self.word_valid?(word)
-    true
+    DictionaryAccessor.word_valid? word
   end
 
   # pretty print the board for debugging

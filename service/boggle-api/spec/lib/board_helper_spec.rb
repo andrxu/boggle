@@ -17,6 +17,46 @@ RSpec.describe BoardHelper do
   end
 
   describe '#find_word_on_board' do
+    context 'happy path' do
+      let(:board_str) { 'TREEIBEOEEZCTXON' }
+
+      it 'returns true' do
+        expect(BoardHelper.word_on_board?(board_str, 'TREE')).to eq true
+      end
+    end
+  end
+
+  describe '#find_word_on_board' do
+    context 'happy path' do
+      let(:board_str) { 'TREEIBEOEEZCTXON' }
+
+      it 'returns true' do
+        expect(BoardHelper.word_on_board?(board_str, 'EERT')).to eq true
+      end
+    end
+  end
+
+  describe '#find_word_on_board' do
+    context 'happy path with lower case word' do
+      let(:board_str) { 'TREEIBEOEEZCTXON' }
+
+      it 'returns true' do
+        expect(BoardHelper.word_on_board?(board_str, 'eert')).to eq true
+      end
+    end
+  end
+
+  describe '#find_word_on_board' do
+    context 'happy path' do
+      let(:board_str) { 'TREEIBEOEEZCTXON' }
+
+      it 'returns true' do
+        expect(BoardHelper.word_on_board?(board_str, 'TEEE')).to eq true
+      end
+    end
+  end
+
+  describe '#find_word_on_board' do
     context 'non existing word' do
       let(:board_str) { 'ABCDEFGHIJKLMNOP' }
 
