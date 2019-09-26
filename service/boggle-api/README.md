@@ -35,25 +35,38 @@ $ rails s
 
 * Test the service:
 
-Get a new board:
+
+1. Get a new board:
 
 ```
 http://ocalhost:3000/boggle/v1/boards/new
 ```
 
-Sample out:
 ```json
 {"board":"XEASYEUHAENTYEBC"}
 ```
 
-  Check a word to see if it's on the board and valid:
+2. Check a word to see if it's on the board and valid:
 ```
-http://localhost:3000/boggle/v1/boards/XEASYEUHAENTYEBC?word=EASY
+http://localhost:3000/boggle/v1/boards/EASYEUHAENTYEBCX?word=EASY
 ```
 
-Sample out:
 ```json
-{"board":"XEASYEUHAENTYEBC","word":"XEAS","found_on_board":false,"word_valid":true}
+{"board":"XEASYEUHAENTYEBC","word":"XEAS","found_on_board":true,"word_valid":true}
 ```
+3. Display a board
+
+```
+http://localhost:3000/boggle/v1/boards/EASYEUHAENTYEBCX
+```
+
+```
+E A S Y 
+E U H A 
+E N T Y 
+E B C X
+```
+
+
 
 
