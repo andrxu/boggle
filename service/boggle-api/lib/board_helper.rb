@@ -1,59 +1,66 @@
 # frozen_string_literal: true
 
-class Board
+class BoardHelper
 
   MIN_WORD_LEN = 3
 
-  BOARD_DIMS = [4*4].freeze # Only 4x4 is supported
+  BOARD_DIMS = [4 * 4].freeze # Only 4x4 is supported
 
   # use predefined seeds to generate boards possibly having more words
-  CUBES = %w[AAEEGN ABBJOO ACHOPS AFFKPS AOOTTW CIMOTU DEILRX DELRVY 
+  CUBES = %w[AAEEGN ABBJOO ACHOPS AFFKPS AOOTTW CIMOTU DEILRX DELRVY
              DISTTY EEGHNW EEINSU EHRTVW EIOSST ELRTTY HIMNQU HLNNRZ].freeze
 
-  def initialize(board_str)
-    raise "invalid board string length #{board_str}" unless BOARD_DIMS.include?(board_str.length)
-
-    @board_str = board_str
-  end
-
-  # return the board as a plain string
-  def to_s
-    @board_str
+  def self.check_word(board_str, word)
+    found_on_board = word_on_board?(board_str, word)
+    word_valid = word_valid?(word)
+    {
+      board: board_str,
+      word: word,
+      found_on_board: found_on_board,
+      word_valid: word_valid
+    }
+  rescue StandardError => e
+    {
+      error: e
+    }
   end
 
   # check if the word exits on the board
-  def find_word_on_board?(word)
+  def self.word_on_board?(board_str, word)
+    raise "invalid board string length #{board_str}" unless BOARD_DIMS.include?(board_str.length)
+
     if word.nil? || (word.length < MIN_WORD_LEN)
       raise "invalid word length: #{word}"
     end
 
-    grid = to_array(@board_str)
+    grid = to_array(board_str)
     rows = grid.length
     cols = grid[0].length
 
     seen = Array.new(rows) { Array.new(cols) { false } }
     index = 0
+    found_on_board = false
     (0...rows).each do |r|
       (0...cols).each do |c|
         if grid[r][c] == word[index]
-          return true if dfs(grid, word, r, c, index, seen)
+          found_on_board = dfs(grid, word, r, c, index, seen)
+          break if found_on_board
         end
       end
     end
-    false
+    found_on_board
   end
 
-  # generate a new board
-  def shuffle
-    @board_str = self.class.generate_board
+  def self.word_valid?(word)
+    true
   end
 
   # pretty print the board for debugging
-  def show
-    dim = Math.sqrt(@board_str.length)
+  def self.show(board_str)
+    dim = Math.sqrt(board_str.length)
     (0...dim).each do |row|
       (0...dim).each do |col|
-        print "#{@board_str[row * dim + col]} "
+        print"#{board_str[row * dim + col]} "
       end
       puts
     end
@@ -79,7 +86,7 @@ class Board
 
   private
 
-  def to_array(board_str)
+  def self.to_array(board_str)
     dim = Math.sqrt(board_str.length)
     board_array = Array.new(dim) { Array.new(dim) { '' } }
 
@@ -97,7 +104,7 @@ class Board
     cube[(rand * cube.length).to_i]
   end
 
-  def dfs(grid, word, r, c, index, seen)
+  def self.dfs(grid, word, r, c, index, seen)
     if (r < 0) || (c < 0) || (r >= grid.length) || (c >= grid[0].length) ||
        seen[r][c] || (grid[r][c] != word[index])
       return false
@@ -120,6 +127,4 @@ class Board
     seen[r][c] = false
   end
 end
-
-
 

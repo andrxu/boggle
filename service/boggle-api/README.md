@@ -19,11 +19,18 @@ Rails 6.0.0
 * How to run the test suite
 
 ```
-$ bundle exec rspec
+$ rails db:migrate RAILS_ENV=test
+$ rails db:environment:set RAILS_ENV=test && bundle exec rspec
 ```
 
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
 
-* ...
+* Run the service
+
+```
+$ rails s
+```
+
+
