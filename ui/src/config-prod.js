@@ -1,0 +1,1 @@
+export const apiHost = "http://localhost:3001/boggle/v1"; //TOOD: set the right VIP url for the backend service
