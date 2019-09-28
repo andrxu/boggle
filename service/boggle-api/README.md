@@ -52,7 +52,7 @@ http://localhost:3000/boggle/v1/boards/EASYEUHAENTYEBCX?word=EASY
 ```
 
 ```json
-{"board":"XEASYEUHAENTYEBC","word":"XEAS","found_on_board":true,"word_valid":true}
+{"board":"EASYEUHAENTYEBCX","word":"EASY","found_on_board":true,"word_valid":true}
 ```
 3. Display a board
 
