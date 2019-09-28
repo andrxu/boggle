@@ -22,7 +22,7 @@ http://localhost:3001/boggle/v1/boards/new
 
 ```
 http://localhost:3001/boggle/v1/boards/EASYEUHAENTYEBCX?word=EASY
-{"board":"EASYEUHAENTYEBCX","word":"XEAS","found_on_board":true,"word_valid":true}
+{"board":"EASYEUHAENTYEBCX","word":"EASY","found_on_board":true,"word_valid":true}
 ```
 
 
