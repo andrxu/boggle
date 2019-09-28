@@ -8,42 +8,31 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
-        };
+        }
     }
-
-    createBoard(row, col) {
+    renderBoard = () => {
+        const DIM = 4;
         const board = [];
-        let index = 0;
-    
-        for (let i = 0; i < row; i++) {
+        let index = 0;    
+        
+        for (let i = 0; i < DIM; i++) {
           const columns = [];
-          for (let j = 0; j < col; j++) {
+          for (let j = 0; j < DIM; j++) {
             columns.push(this.renderSquare(index++));
           }
           board.push(<div key={i} className="board-row">{columns}</div>);
-        }
-    
+        } 
         return board;
       }
 
-      renderSquare(i) {    
+      renderSquare = (i) => {    
         return (
-          <Square
-            key={i}
-            value={this.props.board_str[i]}
-            onClick={() => this.props.onSquareClick(i)}
-          />
+          <Square key={i} value={this.props.board_str[i]} onClick={() => this.props.onSquareClick(i)} />
         );
       }
 
     render = () => {
-        return (
-            <div>
-                <div>Boggle Game</div>
-                <div>{this.createBoard(4, 4)}</div>
-            </div>
-        )   
+        return ( <div>{this.renderBoard()}</div>)   
     }
 }
 

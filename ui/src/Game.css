@@ -1,0 +1,24 @@
+.controls {
+    margin-top:2em;
+}
+
+ul {
+    margin-top:0px;
+    line-height:0px;
+}
+
+ul:first-child {
+    margin-top:10px;
+}
+
+.user-words {
+    font-size:12px;
+}
+
+.extra-space {
+    margin-bottom:1em;   
+}
+
+.input-control {
+    margin-bottom:2em;
+}
