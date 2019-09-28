@@ -10,6 +10,11 @@ Rails 6.0.0
 ```
 * System dependencies
 
+The 3rd party dictionary api:
+```
+https://www.dictionaryapi.com/api/v3/references/sd3/json/%s?key=
+```
+
 * Configuration
 
 * Database creation
