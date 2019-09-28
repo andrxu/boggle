@@ -5,3 +5,28 @@
     font-family: "Raleway", sans-serif;
     text-align: center
 }
+
+.board-row:after {
+    clear: both;
+    content: '';
+    display: table;
+}
+
+.square {
+    background: #fff;
+    border: 1px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 54px;
+    margin-right: 3px;
+    margin-top: 3px;
+    padding: 0;
+    text-align: center;
+    width: 54px;
+}
+
+.board-container {
+    min-width: 480px;
+}

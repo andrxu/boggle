@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require_relative './dictionary_accessor.rb'
 
 class BoardHelper
 
-  MIN_WORD_LEN = 3
+  MIN_WORD_LEN = 2
 
   BOARD_DIMS = [4 * 4].freeze # Only 4x4 is supported
 
@@ -39,13 +40,12 @@ class BoardHelper
     rows = grid.length
     cols = grid[0].length
 
-    seen = Array.new(rows) { Array.new(cols) { false } }
     index = 0
     found_on_board = false
     (0...rows).each do |r|
       (0...cols).each do |c|
         if grid[r][c] == word_search[index]
-          found_on_board = dfs(grid, word_search, r, c, index, seen)
+          found_on_board = find_word_helper(grid, word_search, r, c, index)
           break if found_on_board
         end
       end
@@ -109,27 +109,31 @@ class BoardHelper
     cube[(rand * cube.length).to_i]
   end
 
-  def self.dfs(grid, word, r, c, index, seen)
-    if (r < 0) || (c < 0) || (r >= grid.length) || (c >= grid[0].length) ||
-       seen[r][c] || (grid[r][c] != word[index])
+  def self.find_word_helper(grid, word, row, col, index)
+    place_holder = '*'
+    return true if index == word.length
+
+    if grid[row][col] != word[index] || grid[row][col] == place_holder
       return false
     end
 
-    return true if index + 1 == word.length
+    size = grid.length
+    found_on_board = false
+    grid[row][col] = place_holder
+    (row - 1...row + 2).each do |r|
+      (col - 1...col + 2).each do |c|
+        next unless r >= 0 && c >= 0 && r < size && c < size
+        next unless find_word_helper(grid, word, r, c, index + 1)
 
-    seen[r][c] = true
-    if  dfs(grid, word, r - 1, c,     index + 1, seen) ||
-        dfs(grid, word, r + 1, c,     index + 1, seen) ||
-        dfs(grid, word,     r, c - 1, index + 1, seen) ||
-        dfs(grid, word,     r, c + 1, index + 1, seen) ||
-        dfs(grid, word, r - 1, c - 1, index + 1, seen) ||
-        dfs(grid, word, r - 1, c + 1, index + 1, seen) ||
-        dfs(grid, word, r + 1, c - 1, index + 1, seen) ||
-        dfs(grid, word, r + 1, c + 1, index + 1, seen)
-      return true
+        grid[row][col] = word[index]
+        found_on_board = true
+        break
+      end
+      break if found_on_board
     end
 
-    seen[r][c] = false
+    grid[row][col] = word[index]
+    found_on_board
   end
 end
 

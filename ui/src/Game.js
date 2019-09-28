@@ -45,9 +45,11 @@ class Game extends React.Component {
             }
             return response.json();
         }).then(data => {
-            let userWords = this.state.userWords.slice(0);
-            userWords.push({word: word, valid: data.word_valid === null ? false: data.word_valid}); 
+            const userWords = this.state.userWords.slice(0);
+            const checked_word = {word: word, valid: data.word_valid === null ? false : data.word_valid};
+            userWords.push(checked_word); 
             this.setState({
+                userInput: checked_word.valid ? '' : word, 
                 userWords: userWords
             });
             console.log(this.state.userWords);
@@ -107,7 +109,6 @@ class Game extends React.Component {
                                 {item.word}
                             </Typography>
                         </ul>
-                        <Divider variant="middle" component="ul" />
                     </div>
                 ))}   
             </div>
@@ -122,13 +123,13 @@ class Game extends React.Component {
                         <Grid item xs={12}>
                             <div className='title'><h2>Boggle Game</h2></div>
                         </Grid>                
-                        <Grid item xs={4}/>
+                        <Grid item xs={4}></Grid>
                         <Grid item xs={4}>
                                 <Board board_str={this.state.board_str} onSquareClick={i => this.handleSquareClick(i)} />
                                 <div className='controls'>
                                     <Divider variant="middle" component="ul"/>
                                     <div className="extra-space"/>
-                                    <div style={{float: 'right'}} className="input-control" >
+                                    <div style={{float: 'left'}} className="input-control" >
                                         <FormControl> 
                                             <Input id="input-box" type="text" value={this.state.userInput} onChange={this.handleUserInput} 
                                                 onKeyDown={this.handleKeyDown}/>
@@ -139,14 +140,14 @@ class Game extends React.Component {
                                         </Button>
                                     </div>
                                     <div className="extra-space"/>
-                                    <div style={{float: 'left'}} >
+                                    <div style={{float: 'right'}} >
                                         <Button variant="outlined" size="small" color="primary" onClick={() => this.startOver()}>
                                             Start Over
                                         </Button>
                                     </div>
                                 </div>
                         </Grid>
-                        <Grid item xs={3}>    
+                        <Grid item xs={4}>    
                             <div> 
                                 <div> 
                                     <Typography color="textSecondary" variant="body2">Words found:</Typography>
