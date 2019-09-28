@@ -39,7 +39,7 @@ $ rails s
 1. Get a new board:
 
 ```
-http://ocalhost:3000/boggle/v1/boards/new
+http://localhost:3000/boggle/v1/boards/new
 ```
 
 ```json
