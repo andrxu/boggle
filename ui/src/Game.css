@@ -1,5 +1,6 @@
 .controls {
     margin-top:2em;
+    margin-bottom: 2em;
     clear: both;    
 }
 
@@ -16,10 +17,31 @@ ul:first-child {
     font-size:12px;
 }
 
-.extra-space {
-    margin-bottom:1em;   
+.input-control {
+    margin-top: 1em;
+    margin-bottom:2em;
+    float: right;
 }
 
-.input-control {
-    margin-bottom:2em;
+.button-start-over {
+    margin-top: 0em;
+    clear: both;
+    float: right;
+}
+
+.game-info {
+    margin: 0.8em;
+}
+
+.board-container {
+    min-width: 480px;
+    float: right;
+    border-width: 3px;
+    margin-top: 0.5em;
+}
+
+.board {
+    float: right;
+    margin-bottom: 1em;
+    margin-right: 1em;
 }

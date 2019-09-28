@@ -32,7 +32,7 @@ class Board extends Component {
       }
 
     render = () => {
-        return ( <div className="board-container">{this.renderBoard()}</div>)   
+        return ( <div>{this.renderBoard()}</div>)   
     }
 }
 

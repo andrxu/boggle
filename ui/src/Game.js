@@ -102,15 +102,11 @@ class Game extends React.Component {
         // only show valid words
         return (
             <div className='user-words'>
+                <Typography color="textSecondary" variant="caption">
                 {props.userWords.filter(item => item.valid === true).map((item, index) => (
-                    <div key={index}>
-                        <ul key={index}>
-                            <Typography color="textSecondary" variant="caption">
-                                {item.word}
-                            </Typography>
-                        </ul>
-                    </div>
+                    <ul key={index}>{item.word}</ul>
                 ))}   
+                </Typography>
             </div>
         )
     }
@@ -123,13 +119,15 @@ class Game extends React.Component {
                         <Grid item xs={12}>
                             <div className='title'><h2>Boggle Game</h2></div>
                         </Grid>                
-                        <Grid item xs={4}></Grid>
+                        <Grid item xs={3}></Grid>
                         <Grid item xs={4}>
-                                <Board board_str={this.state.board_str} onSquareClick={i => this.handleSquareClick(i)} />
+                            <div className="board-container">
+                                <div className="board">
+                                    <Board board_str={this.state.board_str} onSquareClick={i => this.handleSquareClick(i)} />
+                                </div>
                                 <div className='controls'>
                                     <Divider variant="middle" component="ul"/>
-                                    <div className="extra-space"/>
-                                    <div style={{float: 'left'}} className="input-control" >
+                                    <div className="input-control" >
                                         <FormControl> 
                                             <Input id="input-box" type="text" value={this.state.userInput} onChange={this.handleUserInput} 
                                                 onKeyDown={this.handleKeyDown}/>
@@ -139,22 +137,23 @@ class Game extends React.Component {
                                             Submit
                                         </Button>
                                     </div>
-                                    <div className="extra-space"/>
-                                    <div style={{float: 'right'}} >
+                                </div>
+                                <div className="button-start-over" >
                                         <Button variant="outlined" size="small" color="primary" onClick={() => this.startOver()}>
                                             Start Over
                                         </Button>
-                                    </div>
                                 </div>
+                            </div>
                         </Grid>
-                        <Grid item xs={4}>    
-                            <div> 
+                        <Grid item xs={2}>    
+                            <div className="game-info"> 
                                 <div> 
-                                    <Typography color="textSecondary" variant="body2">Words found:</Typography>
+                                    <Typography color="textSecondary" variant="body2">Words you found:</Typography>
                                 </div>
                                 {this.renderWordList(this.state)}
                             </div>
                         </Grid>
+                        <Grid item xs={3}></Grid>
                     </Grid>
                 </Grid>
             </div>
