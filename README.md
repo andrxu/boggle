@@ -50,12 +50,13 @@ npm start
 
 * Improve responsive UI, and accessiblity
 * Support clicking letters
-* Visually indicating the current word path on the board
+* Visually indicating the word path on the board
 * Front-end should directly verify if a word is on board
 * Add a button to slove the board automatically
   * the backend will require a local dictionary instead of calling a service for each guess
   * the backend will need to implement a trie with statistics on each layer to support quick lookup and DFS pruning
 * Better stategy to generate a board with more words
-* Backend could pre-generate and store boards
+* Backend can pre-generate/store boards and their solved words
+* Add redux/saga 
 * Allow saving the game
   
