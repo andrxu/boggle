@@ -48,7 +48,7 @@ npm start
 
 ## TODOs
 
-* Improve responsive UI, and accessiblity
+* Improve responsive UI  
 * Support clicking letters
 * Visually indicating the word path on the board
 * Front-end should directly verify if a word is on board
