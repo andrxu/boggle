@@ -65,4 +65,15 @@ RSpec.describe BoardHelper do
       end
     end
   end
+
+  describe '#solve_board' do
+    context 'solve the board automatically' do
+      let(:board_str) { 'TREEIBEOEEZCTXON' }
+
+      it 'returns all words on the board' do
+        result = BoardHelper.solve_board(board_str)
+        expect(!result.empty? && result.include?('TREE')).to eq true
+      end
+    end
+  end
 end

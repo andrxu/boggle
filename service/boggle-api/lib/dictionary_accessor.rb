@@ -17,8 +17,14 @@ class DictionaryAccessor
     { code: response.code, body: response.body }
   end
 
+  # use a remote service to check the word
   def self.word_valid?(word)
     result = query_word(word)
     result[:code] == '200' && result[:body].include?('meta')
+  end
+
+  # use a local dictionary to check the word
+  def self.word_valid_local?(word)
+    DomainData::Dictionary::Trie.include? word.downcase
   end
 end

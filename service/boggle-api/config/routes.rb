@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       scope '/boards' do
         get '/new' => 'boards#new'
         get '/:board' => 'boards#find_word'
+        get '/:board/words' => 'boards#solve_board'
       end
     end
   end

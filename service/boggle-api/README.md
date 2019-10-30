@@ -35,7 +35,7 @@ $ rails db:environment:set RAILS_ENV=test && bundle exec rspec
 * Run the service
 
 ```
-$ rails s
+$ rails s -p 3001
 ```
 
 * Test the service:
@@ -44,7 +44,7 @@ $ rails s
 1. Get a new board:
 
 ```
-http://localhost:3000/boggle/v1/boards/new
+http://localhost:3001/boggle/v1/boards/new
 ```
 
 ```json
@@ -53,7 +53,7 @@ http://localhost:3000/boggle/v1/boards/new
 
 2. Check a word to see if it's on the board and valid:
 ```
-http://localhost:3000/boggle/v1/boards/EASYEUHAENTYEBCX?word=EASY
+http://localhost:3001/boggle/v1/boards/EASYEUHAENTYEBCX?word=EASY
 ```
 
 ```json
@@ -62,7 +62,7 @@ http://localhost:3000/boggle/v1/boards/EASYEUHAENTYEBCX?word=EASY
 3. Display a board
 
 ```
-http://localhost:3000/boggle/v1/boards/EASYEUHAENTYEBCX
+http://localhost:3001/boggle/v1/boards/EASYEUHAENTYEBCX
 ```
 
 ```
@@ -72,6 +72,14 @@ E N T Y
 E B C X
 ```
 
+4. Auto solve a board automatically
 
+```
+http://localhost:3001/boggle/v1/boards/ABCHIBEOEEZCTXON/words
+```
+
+```
+["ABE","ABI","BABE","BEE","BEI","BET","BIB","CHE","CHO","COCO","COE","CON","ECHO","ECO","ECON","EXE","EXT","HEE","HOC","TEE","TEX"]
+```
 
 
