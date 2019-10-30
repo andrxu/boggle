@@ -13,10 +13,6 @@ ul:first-child {
     margin-top:10px;
 }
 
-.user-words {
-    font-size:12px;
-}
-
 .input-control {
     margin-top: 1em;
     margin-bottom:2em;
@@ -24,24 +20,51 @@ ul:first-child {
 }
 
 .button-start-over {
+    margin-top: 1em;
+    clear: both;
+    float: right;
+}
+
+.button-solve {
     margin-top: 0em;
     clear: both;
     float: right;
 }
 
-.game-info {
+.user-words {
+    clear: both;
+    float: left;
+}
+
+.user-words-title {
+    clear: both;
+    float: left;
+    margin: 0.8em;
+}
+
+.computer-words {
+    clear: both;
+    float: right;
+    margin-right: 3em;
+}
+
+.computer-words-title {
+    clear: both;
+    float: right;
     margin: 0.8em;
 }
 
 .board-container {
-    min-width: 480px;
+    min-width: 250px;
     float: right;
     border-width: 3px;
     margin-top: 0.5em;
 }
 
 .board {
-    float: right;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 1em;
     margin-right: 1em;
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import Board from './Board.js';
 import {apiHost} from './config'
 import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
@@ -17,24 +16,17 @@ class Game extends React.Component {
       this.state = {
           board_str: '',
           userInput: '',
-          userWords: []
+          userWords: [],
+          computerWords: []
       };
     }
 
     componentDidMount = () => {
-        this.startOver();
+        this.handleStartOverClick();
     }
 
-    startOver = () => {
-        this.requestNewBoard();
-        this.setState({
-            userInput: '',
-            userWords: []
-        });
-    } 
-
     // Call the backend to check if the word is on the board and valid
-    checkWord = () => {
+    requestWordCheck = () => {
         const word = this.state.userInput;
         if (this.state.userWords.some((w) => w.word === word)) {
             return; // this word has been searched already
@@ -58,6 +50,25 @@ class Game extends React.Component {
         });
     }
 
+    // Call the backend to solve the board
+    requestSolveBoard = () => {
+        fetch(apiHost + "/boards/" + this.state.board_str + '/words').then(response => {
+            if (response.status !== 200) {
+                throw Error("The server could not process the request.");
+            }
+            return response.json();
+        }).then(data => {
+            console.log(data);
+            this.setState({
+                computerWords: data
+            });
+            console.log(this.state.computerWords);
+        }).catch((error) => {
+            alert('Please note the server isn\'t responding: ' + error);
+        });
+    }
+
+    // Call the backend to request a new board
     requestNewBoard = () => {
         fetch(apiHost + "/boards/new").then(response => {
             if (response.status !== 200) {
@@ -74,6 +85,19 @@ class Game extends React.Component {
         });
     }
 
+    handleStartOverClick = () => {
+        this.requestNewBoard();
+        this.setState({
+            userInput: '',
+            userWords: [],
+            computerWords: []
+        });
+    } 
+
+    handleSolveClick = () => {
+        this.requestSolveBoard();
+    }
+
     handleSquareClick = (index) => {
         console.log(this.state.board_str[index] + ' was clicked');
     }
@@ -87,23 +111,35 @@ class Game extends React.Component {
     handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             if (typeof(e.targe) !== undefined && e.target.value.length > 0) { 
-                this.checkWord(); 
+                this.requestWordCheck(); 
             }
         }
     }
 
-    submit = () => {
+    handleSubmitClick = () => {
         if (this.state.userInput.length > 0) {
-            this.checkWord();
+            this.requestWordCheck();
         }
     }
 
-    renderWordList = (props) => {
+    renderComputerWordList = (props) => {
+        return (
+            <div className='computer-words'>
+                <Typography color="textSecondary" variant="caption">
+                {props.map((item, index) => (
+                    <ul key={index}>{item}</ul>
+                ))}   
+                </Typography>
+            </div>
+        )
+    }
+
+    renderUserWordList = (props) => {
         // only show valid words
         return (
             <div className='user-words'>
                 <Typography color="textSecondary" variant="caption">
-                {props.userWords.filter(item => item.valid === true).map((item, index) => (
+                {props.filter(item => item.valid === true).map((item, index) => (
                     <ul key={index}>{item.word}</ul>
                 ))}   
                 </Typography>
@@ -120,37 +156,49 @@ class Game extends React.Component {
                             <div className='title'><h2>Boggle Game</h2></div>
                         </Grid>                
                         <Grid item xs={3}></Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={2}>
+                            <div className="computer-words-info">
+                                <div className="computer-words-title"> 
+                                    <Typography color="textSecondary" variant="body2">Words on board:</Typography>
+                                </div>
+                                {this.renderComputerWordList(this.state.computerWords)}
+                            </div>
+                        </Grid>
+                        <Grid item xs={2}>
                             <div className="board-container">
                                 <div className="board">
                                     <Board board_str={this.state.board_str} onSquareClick={i => this.handleSquareClick(i)} />
                                 </div>
                                 <div className='controls'>
-                                    <Divider variant="middle" component="ul"/>
                                     <div className="input-control" >
                                         <FormControl> 
                                             <Input id="input-box" type="text" value={this.state.userInput} onChange={this.handleUserInput} 
                                                 onKeyDown={this.handleKeyDown}/>
                                             <FormHelperText id="input-box-helper-text">Type the word you find here</FormHelperText>
                                         </FormControl>
-                                        <Button variant="outlined" size="small" color="primary" onClick={() => this.submit()}>
+                                        <Button variant="outlined" size="small" color="primary" onClick={() => this.handleSubmitClick()}>
                                             Submit
                                         </Button>
                                     </div>
                                 </div>
+                                <div className="button-solve" >
+                                    <Button variant="outlined" size="small" color="primary" onClick={() => this.handleSolveClick()}>
+                                        Solve Me
+                                    </Button>
+                                </div>
                                 <div className="button-start-over" >
-                                        <Button variant="outlined" size="small" color="primary" onClick={() => this.startOver()}>
-                                            Start Over
-                                        </Button>
+                                    <Button variant="outlined" size="small" color="primary" onClick={() => this.handleStartOverClick()}>
+                                        Start Over
+                                    </Button>
                                 </div>
                             </div>
                         </Grid>
                         <Grid item xs={2}>    
-                            <div className="game-info"> 
-                                <div> 
+                            <div className="user-words-info"> 
+                                <div className="user-words-title">  
                                     <Typography color="textSecondary" variant="body2">Words you found:</Typography>
                                 </div>
-                                {this.renderWordList(this.state)}
+                                {this.renderUserWordList(this.state.userWords)}
                             </div>
                         </Grid>
                         <Grid item xs={3}></Grid>
